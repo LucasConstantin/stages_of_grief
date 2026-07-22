@@ -1,0 +1,24 @@
+Logging:
+    default: INFO
+
+General:
+    Modus:         List
+    Time_Step_Mode: None
+    Delta_Time:    0.1
+    End_Time:      10000.0    # make sure runtime is long enough for back-propagation
+    Randomseed:    -1
+    Nevents:       1000
+
+Collision_Term:
+    Strings: True
+    String_Parameters:
+        Use_Monash_Tune: False
+
+Output:
+    Particles:
+        Format:          ["Oscar2013"]
+
+Modi:
+    List:
+        File_Directory: "."
+        Filename: "particle_lists.oscar"

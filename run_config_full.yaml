@@ -1,0 +1,39 @@
+# Run configuration for the stages_of_grief hybrid pipeline.
+#
+# Each top-level key is a stage name, run in the order they appear here.
+# input_files entries are interpreted as file names inside the previous
+# stage output folder (absolute paths are also allowed).
+#
+# Available placeholders in run_command: {executable} {config} {input} {output_path}
+# Optional per-stage key run_from controls the process working directory.
+# Supported values: workdir (default), executable_dir, or a custom path.
+workdir: /Users/lucasconstantin/PhD/stages_of_grief/work/
+
+stages:
+  AngantyrIC:
+    executable_path: /Users/lucasconstantin/PhD/Angantyr_IC/build/angantyr_ic
+    config_path: ""
+    input_files: []
+    output_path: AngantyrIC/
+    run_command: "{executable} {output_path} 1 -1"
+
+  vHLLE:
+    executable_path: /Users/lucasconstantin/PhD/vhlle/hlle_visc
+    config_path: /Users/lucasconstantin/PhD/stages_of_grief/configs/vhlle_hydro
+    output_path: Hydro/
+    input_files: ["Angantyr_IC.dat"]
+    run_from: executable_dir
+    run_command: "{executable} -params {config} -ISinput {input} -outputDir {output_path}"
+
+  HadronSampler:
+    executable_path: /Users/lucasconstantin/PhD/smash-hadron-sampler/build/sampler
+    config_path: /Users/lucasconstantin/PhD/stages_of_grief/configs/hadron_sampler_config
+    output_path: Sampler/
+    input_files: ["freezeout.dat"]
+    run_command: "{executable} -c {config} -s {input} -o {output_path}"
+
+  Afterburner:
+    executable_path: /Users/lucasconstantin/PhD/smash-devel/build/smash
+    config_path: /Users/lucasconstantin/PhD/stages_of_grief/configs/smash_afterburner.yaml
+    output_path: Afterburner/
+    run_command: "{executable} -i {config} -c 'Modi: {{List: {{File_Directory: Sampler}}}}' -t '{workdir}/work/tabulations' -o {output_path}"

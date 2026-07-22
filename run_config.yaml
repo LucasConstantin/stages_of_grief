@@ -1,0 +1,36 @@
+# Run configuration for the stages_of_grief hybrid pipeline.
+#
+# Each top-level key is a stage name, run in the order they appear here.
+# The output of a stage is automatically passed as the input of the next
+# stage, unless input_files is explicitly set for that stage.
+#
+# Available placeholders in run_command: {executable} {config} {input} {output}
+stages:
+  AngantyrIC:
+    executable_path: mocks/AngantyrIC_mock.py
+    config_path: configs/angantyr.cfg
+    input_files: []
+    output: IC/output.dat
+    workdir: work/AngantyrIC
+    run_command: "{executable} --config {config} --output {output}"
+
+  vHLLE:
+    executable_path: mocks/vhlle_mock.py
+    config_path: configs/vhlle.cfg
+    output: hydro/output.dat
+    workdir: work/vHLLE
+    run_command: "{executable} --config {config} --input {input} --output {output}"
+
+  HadronSampler:
+    executable_path: mocks/hadron_sampler_mock.py
+    config_path: configs/hadron_sampler.cfg
+    output: sampler/output.dat
+    workdir: work/HadronSampler
+    run_command: "{executable} --config {config} --input {input} --output {output}"
+
+  SMASH:
+    executable_path: mocks/SMASH_mock.py
+    config_path: configs/smash.cfg
+    output: smash/output.dat
+    workdir: work/SMASH
+    run_command: "{executable} --config {config} --input {input} --output {output}"

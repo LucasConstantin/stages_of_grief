@@ -1,0 +1,45 @@
+! ------------------------------------------------------------
+! PYTHIA 8 / Angantyr configuration for O-16 + O-16
+! sqrt(s_NN) = 5.36 TeV
+! ------------------------------------------------------------
+
+! Keep terminal output manageable.
+Print:quiet = on
+Next:numberShowInfo = 0
+Next:numberShowProcess = 0
+Next:numberShowEvent = 0
+
+! Number of events used when --events is not supplied.
+Main:numberOfEvents = 100
+
+! Oxygen-16 beams.
+Beams:idA = 1000080160
+Beams:idB = 1000080160
+
+! Nucleon-nucleon centre-of-mass energy in GeV.
+Beams:eCM = 5360.0
+Beams:frameType = 1
+
+! Enable heavy-ion generation.
+HeavyIon:mode = 1
+
+! Minimum-bias impact-parameter sampling.
+! Ignored/replaced when your --fixed-b hook is active.
+HeavyIon:bWidth = 12.0
+
+! Give generated heavy-ion events unit weight.
+HeavyIon:forceUnitWeight = on
+
+! Store hadron-production vertices.
+Fragmentation:setVertices = on
+
+! Leave unstable hadrons undecayed for the transport initial state.
+HadronLevel:Decay = off
+
+! Default seed. Your --seed command-line option overrides this.
+Random:setSeed = on
+Random:seed = 12345
+
+! Optional numerical/event checks.
+Check:event = on
+Check:epTolErr = 0.01
